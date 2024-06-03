@@ -37,7 +37,7 @@ public class RemoveStringCommand implements Command<List<ProcessLog>> {
         Matcher matcher = pattern.matcher(input);
         ProcessLog log = new ProcessLog(input, input,"","");
         String processed = input;
-        while (matcher.find()) {
+        if (matcher.find()) {
             String group = matcher.group();
             processed = processed.replaceAll(group, "");
         }

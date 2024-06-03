@@ -34,7 +34,7 @@ public class AppTest
         String input = "aabcccbbadxxxuup";
         Command<List<ProcessLog>> command = new RemoveStringCommand(input);
         List<ProcessLog> output = command.execute();
-        assertTrue(output.size() == 3);
+        assertTrue(output.size() == 4);
         assertTrue(output.get(output.size()-1).getOutput().equals("duup"));
     }
 
@@ -59,7 +59,7 @@ public class AppTest
         String input = "abcccbadgggxy";
         Command<List<ProcessLog>> command = new ReplaceStringCommand(input);
         List<ProcessLog> output = command.execute();
-        assertTrue(output.size() == 3);
+        assertTrue(output.size() == 4);
         assertTrue(output.get(output.size()-1).getOutput().equals("dfxy"));
     }
 }

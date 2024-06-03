@@ -19,12 +19,10 @@ public class ReplaceStringCommand implements Command<List<ProcessLog>> {
         String remaining = input;
         while (true) {
             ProcessLog log = processString(remaining);
-            result.add(log);
-
             if (remaining.equals(log.getOutput())) {
-                result.remove(result.size() - 1);
                 break;
             }
+            result.add(log);
             remaining = log.getOutput();
         }
         return result;
@@ -33,27 +31,14 @@ public class ReplaceStringCommand implements Command<List<ProcessLog>> {
     private ProcessLog processString(final String input) {
         Matcher matcher = pattern.matcher(input);
         ProcessLog log = new ProcessLog(input, input, "", "", false);
-        String processed = input;
-        StringBuilder target = new StringBuilder();
-        StringBuilder replacement = new StringBuilder();
 
-        while (matcher.find()) {
+        if (matcher.find()) {
             String group = matcher.group();
             String beforeChar = beforeChar(group);
-            processed = processed.replaceAll(group, beforeChar);
-
-            target.append(group);
-            target.append(",");
-            replacement.append(beforeChar);
-            replacement.append(",");
+            log.setTarget(group);
+            log.setReplacement(beforeChar);
+            log.setOutput(input.replaceAll(group, beforeChar));
         }
-        if (target.length() > 0) {
-            log.setTarget(target.deleteCharAt(target.length() - 1).toString());
-        }
-        if (replacement.length() > 0) {
-            log.setReplacement(replacement.deleteCharAt(replacement.length() - 1).toString());
-        }
-        log.setOutput(processed);
         return log;
     }
 
